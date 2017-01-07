@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-import Assets, loginapp
-
 
 urlpatterns = [
-    url(r'^auth/', include('loginapp.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('Assets.urls'))
-
+    url(r'^auth', include('loginapp.urls')),
+    url(r'^admin', admin.site.urls),
+    url(r'^questions', include('Assets.urls')),
+    url(r'^', include('mainmenu.urls'))
 ]

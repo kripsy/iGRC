@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>iGRC</title>
+    <title>Django</title>
     <link rel="stylesheet" type="text/css" href="/static/css/foundation.css">
 </head>
 <body>
@@ -11,23 +11,24 @@
 <div class="top-bar">
     <ul class="dropdown menu" data-dropdown-menu>
 
+
         <li>
-            <a href="">Session</a>
+            <a href="#">Сессия</a>
             <ul class="menu">
                 {% if username %}
-                    <li><a href="/auth/logout">Logout - {{ username }}</a></li>
+                    <li><a href="/auth/logout">Выйти({{ username }})</a></li>
                 {% else %}
-                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="/auth/login">Войти</a></li>
                 {% endif %}
             </ul>
         </li>
 
-        {% if username %}
+        {% if assets_permission %}
             <li>
-                <a href="">Quesions, Assets</a>
+                <a href="#">Вопросы и тестирования</a>
                 <ul class="menu">
-                    <li><a href="/questions">Questions</a></li>
-                    <li><a href="/assets">Assets</a></li>
+                    <li><a href="/">Есть права на работу с Asset и Question</a></li>
+
                 </ul>
             </li>
         {% endif %}
@@ -43,15 +44,10 @@
 </div>
 
 
-<h6>Сессия : {{ username }}</h6>
-<h6>Действие : {{ action }}</h6>
+<h1><a href="/">{{ username }}</a></h1>
 <div class="row">
     {% block article %}{% endblock %}
     {% block login %}{% endblock %}
-    {% block questions %}{% endblock %}
-    {% block edit_question %}{% endblock %}
-    {% block question %} {% endblock %}
-    {% block create_question %}{% endblock %}
 </div>
 <script src="/static/js/vendor/jquery.js"></script>
 <script src="/static/js/vendor/what-input.js"></script>

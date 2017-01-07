@@ -8,7 +8,7 @@ from django.template.context_processors import csrf
 def login(request):
     args = {}
     args.update(csrf(request))
-    print("test")
+    args['action'] = "Авторизация"
     if request.POST:
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -22,7 +22,6 @@ def login(request):
 
     else:
         return render_to_response('login.html', args)
-
 
 def logout(request):
     auth.logout(request)

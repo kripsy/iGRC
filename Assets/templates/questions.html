@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% block questions %}
+
+    <a href="/questions/create_question">
+        <span class="label success">Create question</span>
+    </a>
+
+    <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
+        {% for question in questions %}
+            <li class="accordion-item" data-accordion-item>
+                <a href="/questions/{{ question.id }}" class="accordion-title"><h6>{{ question }}</h6></a>
+
+                <div class="accordion-content" data-tab-content>
+
+                    <div class="row">
+                        <div class="medium-2 columns">
+                    <span class="label secondary">
+                        Формулировка вопроса
+                    </span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="column">
+                    <span class="callout secondary">{{ question.question_text }}
+                    </span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row align-justify">
+                        <div class="column small-2">
+                            <a href="/questions/{{ question.id }}/edit_question">
+                                <span class="label warning">Change question</span>
+                            </a>
+                        </div>
+
+                        <div class="column small-2">
+                            <a href="/questions/{{ question.id }}/delete_question">
+                                <span class="label alert">Delete question</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <br>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

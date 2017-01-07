@@ -4,6 +4,6 @@ from loginapp.views import login, logout
 
 
 urlpatterns = [
-    url(r'^login/', login, name = 'login'),
-    url(r'^logout/', logout, name='logout'),
+    url(r'^/login', login, name = 'login'),
+    url(r'^/logout', logout, name='logout'),
 ]
