@@ -10,7 +10,7 @@ def menu(request):
     args['username'] = auth.get_user(request).username
     args['permission'] = auth.get_user(request).get_group_permissions()
     args['action'] = "Главное меню"
-    if ("Assets.delete_question" in args['permission']):
+    if ("assay.delete_question" in args['permission']):
         args['assets_permission'] = True
     else:
         args['assets_permission'] = False

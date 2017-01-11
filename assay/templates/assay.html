@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+{% block assay %}
+
+    <a href="/assay/assays" class="button">Вернуться к списку Assays</a>
+
+    {{ form }}
+
+    <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
+        <h4>Выборка вопросов</h4>
+        <hr>
+        {% for assay_question in assay.assay_question.all %}
+            <li class="accordion-item" data-accordion-item>
+                <a class="accordion-title">
+                    <h6>{{ assay_question }}</h6></a>
+
+                <div class="accordion-content" data-tab-content>
+
+                    <div class="row">
+                        <div class="medium-2 columns">
+                    <span class="label secondary">
+                        Формулировка вопроса
+                    </span>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="column">
+                    <span class="callout secondary">{{ assay_question.question_text }}
+                    </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

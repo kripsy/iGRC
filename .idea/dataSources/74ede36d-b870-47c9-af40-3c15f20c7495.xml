@@ -6,9 +6,9 @@
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
-    <table id="3" parent="2" name="Assets_asset"/>
-    <table id="4" parent="2" name="Assets_asset_asset_question"/>
-    <table id="5" parent="2" name="Assets_question"/>
+    <table id="3" parent="2" name="assay_assay"/>
+    <table id="4" parent="2" name="assay_assay_assay_question"/>
+    <table id="5" parent="2" name="assay_question"/>
     <table id="6" parent="2" name="auth_group"/>
     <table id="7" parent="2" name="auth_group_permissions"/>
     <table id="8" parent="2" name="auth_permission"/>
@@ -24,59 +24,59 @@
       <DataType>INTEGER(0,-1)|4</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="18" parent="3" name="asset_result">
+    <column id="18" parent="3" name="assay_result">
       <Position>1</Position>
       <DataType>VARCHAR(50)(0,-1)|12</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="19" parent="3" name="asset_text_result">
+    <column id="19" parent="3" name="assay_text_result">
       <Position>2</Position>
       <DataType>TEXT(0,-1)|12</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="20" parent="3">
+    <column id="20" parent="3" name="assay_description">
+      <Position>3</Position>
+      <DataType>VARCHAR(50)(0,-1)|12</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="21" parent="3">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="21" parent="4" name="id">
+    <column id="22" parent="4" name="id">
       <DataType>INTEGER(0,-1)|4</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="22" parent="4" name="asset_id">
+    <column id="23" parent="4" name="assay_id">
       <Position>1</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="23" parent="4" name="question_id">
+    <column id="24" parent="4" name="question_id">
       <Position>2</Position>
       <DataType>INTEGER(0,-1)|4</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="24" parent="4" name="Assets_asset_asset_question_asset_id_a032772c_uniq">
-      <ColNames>asset_id
-question_id</ColNames>
-      <Unique>1</Unique>
-    </index>
     <key id="25" parent="4">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="26" parent="4" name="#FAKE_Assets_asset_asset_question_2">
+    <foreign-key id="26" parent="4" name="#FAKE_assay_assay_assay_question_2">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>asset_id</ColNames>
+      <ColNames>assay_id</ColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
-      <RefTableName>Assets_asset</RefTableName>
+      <RefTableName>assay_assay</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>no-action</OnDelete>
       <OnUpdate>no-action</OnUpdate>
     </foreign-key>
-    <foreign-key id="27" parent="4" name="#FAKE_Assets_asset_asset_question_1">
+    <foreign-key id="27" parent="4" name="#FAKE_assay_assay_assay_question_1">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>question_id</ColNames>
       <Deferrable>1</Deferrable>
       <InitiallyDeferred>1</InitiallyDeferred>
-      <RefTableName>Assets_question</RefTableName>
+      <RefTableName>assay_question</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>no-action</OnDelete>
       <OnUpdate>no-action</OnUpdate>

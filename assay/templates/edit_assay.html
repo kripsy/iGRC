@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 
-{% block edit_question %}
+{% block edit_assay %}
 
     <div class="warning callout" data-closable="slide-out-right">
         <p>После нажатия на "Сохранить" данные будут модифицированы.
@@ -15,7 +15,7 @@
 
 
 
-    <form action="/questions/{{ question_id }}/edit_question" method="post">
+    <form action="/assay/assays/{{ assay_id }}/edit_assay" method="post">
         {% csrf_token %}
         {{ form_edit }}
         <input class="button" type="submit" value="Save">

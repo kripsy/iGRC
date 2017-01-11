@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Django</title>
+    <title>iGRC</title>
     <link rel="stylesheet" type="text/css" href="/static/css/foundation.css">
 </head>
 <body>
@@ -11,24 +11,23 @@
 <div class="top-bar">
     <ul class="dropdown menu" data-dropdown-menu>
 
-
         <li>
-            <a href="#">Сессия</a>
+            <a href="/">Session</a>
             <ul class="menu">
                 {% if username %}
-                    <li><a href="/auth/logout">Выйти({{ username }})</a></li>
+                    <li><a href="/auth/logout">Logout - {{ username }}</a></li>
                 {% else %}
-                    <li><a href="/auth/login">Войти</a></li>
+                    <li><a href="/auth/login">Login</a></li>
                 {% endif %}
             </ul>
         </li>
 
-        {% if assets_permission %}
+        {% if username %}
             <li>
-                <a href="#">Вопросы и тестирования</a>
+                <a href="/assay/menu">Assay</a>
                 <ul class="menu">
-                    <li><a href="/">Есть права на работу с Asset и Question</a></li>
-
+                    <li><a href="/assay/questions">Questions</a></li>
+                    <li><a href="/assay/assays">Assays</a></li>
                 </ul>
             </li>
         {% endif %}
@@ -44,10 +43,24 @@
 </div>
 
 
-<h1><a href="/">{{ username }}</a></h1>
+<h6>Сессия : {{ username }}</h6>
+<h6>Действие : {{ action }}</h6>
 <div class="row">
+
+
     {% block article %}{% endblock %}
     {% block login %}{% endblock %}
+    {% block questions %}{% endblock %}
+    {% block edit_question %}{% endblock %}
+    {% block question %} {% endblock %}
+    {% block create_question %}{% endblock %}
+    {% block assays %}{% endblock %}
+    {% block edit_assay %}{% endblock %}
+    {% block assay %}{% endblock %}
+    {% block create_assay %}{% endblock %}
+    {% block assay_menu %}{% endblock %}
+
+
 </div>
 <script src="/static/js/vendor/jquery.js"></script>
 <script src="/static/js/vendor/what-input.js"></script>
