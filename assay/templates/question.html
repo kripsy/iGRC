@@ -2,6 +2,33 @@
 
 
 {% block question %}
-    {{ form_edit }}
+    {{ form_question }}
+
+
+
+    <ul class="tabs" data-tabs data-active-collapse="true" id="example-tabs">
+    {% if form_question_text_input %}
+        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Input text</a></li>
+        {% endif %}
+    </ul>
+
+
+    <div class="tabs-content" data-tabs-content="example-tabs">
+        <div class="tabs-panel" id="panel1">
+            {% for form_temp in form_question_text_input %}
+                Следующий
+                {{ form_temp }}
+                <hr>
+                <br>
+            {% endfor %}
+        </div>
+        <div class="tabs-panel" id="panel2">
+            <p>Suspendisse dictum feugiat nisl ut dapibus. Vivamus hendrerit arcu sed erat molestie vehicula. Ut in
+                nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Sed auctor neque eu
+                tellus rhoncus ut eleifend nibh porttitor.</p>
+        </div>
+    </div>
+
+
     <a href="/assay/questions" class="button">Вернуться к списку Questions</a>
 {% endblock %}

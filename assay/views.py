@@ -1,9 +1,10 @@
 from django.contrib import auth
 from django.shortcuts import render, render_to_response, HttpResponse, redirect
 from django.http.response import Http404
-from assay.models import Question, Assay
+from assay.models import Question, Assay, Question_Text_Input
 from django.template.context_processors import csrf
-from assay.forms import Question_Edit, Assay_Edit, Assay_View
+from assay.forms import Question_Edit, Assay_Edit, Assay_View, Question_Text_Input_Create, Question_View, \
+    Question_Text_Input_View
 
 
 # Create your views here.
@@ -28,9 +29,18 @@ def question(request, question_id=1):
     args['action'] = "Просмотр Question %s" % Question.objects.get(id=question_id).question_description
     question = Question.objects.get(id=question_id)
     if ("assay.change_question" in user_permission):
-        form_edit = Question_Edit(
+        form_question_text_input = []
+        form_question = Question_View(
             {'question_description': question.question_description, 'question_text': question.question_text})
-        args['form_edit'] = form_edit
+        if (Question_Text_Input.objects.filter(question_text_input_question_id=question_id)):
+            for question_text_input in Question_Text_Input.objects.filter(question_text_input_question_id=question_id):
+                form_temp = Question_Text_Input_View(
+                    {'question_text_input_label': question_text_input.question_text_input_label,
+                     'question_text_input_value': question_text_input.question_text_input_value,
+                     'question_text_input_id': question_text_input.id})
+                form_question_text_input.insert(len(form_question_text_input), form_temp)
+        args['form_question'] = form_question
+        args['form_question_text_input'] = form_question_text_input
         return render_to_response('question.html', args)
     else:
         return redirect("/")
@@ -53,6 +63,16 @@ def edit_question(request, question_id=1):
         else:
             form = Question_Edit(
                 {'question_description': question.question_description, 'question_text': question.question_text})
+            form_question_text_input = []
+            if (Question_Text_Input.objects.filter(question_text_input_question_id=question_id)):
+                for question_text_input in Question_Text_Input.objects.filter(
+                        question_text_input_question_id=question_id):
+                    form_temp = Question_Text_Input_View(
+                        {'question_text_input_label': question_text_input.question_text_input_label,
+                         'question_text_input_value': question_text_input.question_text_input_value,
+                         'question_text_input_id': question_text_input.id})
+                    form_question_text_input.insert(len(form_question_text_input), form_temp)
+            args['form_question_text_input'] = form_question_text_input
             args['form_edit'] = form
             args['question_id'] = question_id
             return render_to_response('edit_question.html', args)
@@ -143,7 +163,7 @@ def assay(request, assay_id=1):
 
 def delete_assay(request, assay_id):
     args = {}
-    args.update(csrf(request))
+    # args.update(csrf(request))
     args['username'] = auth.get_user(request).username
     args['action'] = "Удаление Assay id =  %s" % Assay.objects.get(id=assay_id).id
     assay = Assay.objects.get(id=assay_id)
@@ -177,3 +197,45 @@ def menu(request):
     if ("assay.change_question" in auth.get_user(request).get_group_permissions()):
         return render_to_response('assay_menu.html', args)
     return redirect('/')
+
+
+def add_question_text_input(request, question_id=1):
+    args = {}
+    args.update(csrf(request))
+    args['action'] = "Редактирование Question %s добавление question_text_input" % question_id
+    question = Question.objects.get(id=question_id)
+    args['username'] = auth.get_user(request).username
+    user_permission = auth.get_user(request).get_group_permissions()
+    if ("assay.change_question" in auth.get_user(request).get_group_permissions()):
+        if request.POST:
+            form = Question_Text_Input_Create(request.POST)
+            if form.is_valid():
+                question_text_input = Question_Text_Input.objects.create_question_text_input(
+                    form.cleaned_data['question_text_input_label'], form.cleaned_data['question_text_input_value'])
+                question_text_input.save()
+                question.question_text_input_set.add(question_text_input)
+                question.save()
+                return redirect("/assay/questions/%s/edit_question" % question_id)
+        else:
+            form = Question_Text_Input_Create()
+            args['form'] = form
+            args['question_id'] = question_id
+            return render_to_response('assay_edit_question_add_question_text_input.html', args)
+    else:
+        return redirect("/assay/questions")
+
+
+def delete_question_text_input(request):
+    args = {}
+    args.update(csrf(request))
+    args['username'] = auth.get_user(request).username
+    user_permission = auth.get_user(request).get_group_permissions()
+    if (request.POST):
+        if ("assay.change_question" in auth.get_user(request).get_group_permissions()):
+            question_text_input_id = request.POST.get('question_text_input_id', '')
+            question_text_input = Question_Text_Input.objects.get(id=question_text_input_id)
+
+            if (question_text_input is not None):
+                question_text_input.delete()
+
+    return redirect("%s" % request.META.get('HTTP_REFERER', '/'))
