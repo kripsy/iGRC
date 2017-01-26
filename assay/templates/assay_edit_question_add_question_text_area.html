@@ -14,7 +14,7 @@
 
 
 
-    <form action="/assay/questions/{{ question_id }}/edit_question/add_question_text_input" method="post">
+    <form action="/assay/questions/{{ question_id }}/edit_question/add_question_text_area" method="post">
         {% csrf_token %}
         {{ form }}
         <input class="button" type="submit" value="Save">

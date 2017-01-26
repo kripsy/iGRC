@@ -7,14 +7,25 @@
 
 
     <ul class="tabs" data-tabs data-active-collapse="true" id="example-tabs">
-    {% if form_question_text_input %}
-        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Input text</a></li>
+
+        {% if form_question_text_input %}
+            <li class="tabs-title"><a href="#question_text_input" aria-selected="true">Input text</a></li>
         {% endif %}
+
+        {% if form_question_number_input %}
+            <li class="tabs-title"><a href="#question_number_input" aria-selected="true">Input number</a></li>
+        {% endif %}
+
+        {% if form_question_text_area %}
+            <li class="tabs-title"><a href="#question_text_area" aria-selected="true">Text area</a></li>
+        {% endif %}
+
     </ul>
 
 
     <div class="tabs-content" data-tabs-content="example-tabs">
-        <div class="tabs-panel" id="panel1">
+
+        <div class="tabs-panel" id="question_text_input">
             {% for form_temp in form_question_text_input %}
                 Следующий
                 {{ form_temp }}
@@ -22,13 +33,26 @@
                 <br>
             {% endfor %}
         </div>
-        <div class="tabs-panel" id="panel2">
-            <p>Suspendisse dictum feugiat nisl ut dapibus. Vivamus hendrerit arcu sed erat molestie vehicula. Ut in
-                nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Sed auctor neque eu
-                tellus rhoncus ut eleifend nibh porttitor.</p>
+
+        <div class="tabs-panel" id="question_number_input">
+            {% for form_temp in form_question_number_input %}
+                Следующий
+                {{ form_temp }}
+                <hr>
+                <br>
+            {% endfor %}
         </div>
+
+
+    <div class="tabs-panel" id="question_text_area">
+        {% for form_temp in form_question_text_area %}
+            Следующий
+            {{ form_temp }}
+            <hr>
+            <br>
+        {% endfor %}
     </div>
 
-
+</div>
     <a href="/assay/questions" class="button">Вернуться к списку Questions</a>
 {% endblock %}

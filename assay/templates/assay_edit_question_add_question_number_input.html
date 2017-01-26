@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
 
-{% block assay_edit_question_add_question_text_input %}
+{% block assay_edit_question_add_question_number_input %}
 
     <div class="warning callout" data-closable="slide-out-right">
         <p>После нажатия на "Сохранить" данные будут модифицированы.
@@ -14,7 +14,7 @@
 
 
 
-    <form action="/assay/questions/{{ question_id }}/edit_question/add_question_text_input" method="post">
+    <form action="/assay/questions/{{ question_id }}/edit_question/add_question_number_input" method="post">
         {% csrf_token %}
         {{ form }}
         <input class="button" type="submit" value="Save">

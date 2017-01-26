@@ -14,10 +14,6 @@
 
 
 
-
-
-
-
     <form action="/assay/questions/{{ question_id }}/edit_question" method="post">
         {% csrf_token %}
         {{ form_edit }}
@@ -26,12 +22,24 @@
 
     <ul class="tabs" data-tabs data-active-collapse="true" id="example-tabs">
         {% if form_question_text_input %}
-            <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Input text</a></li>
+            <li class="tabs-title"><a href="#question_text_input" aria-selected="true">Input text</a></li>
         {% endif %}
+
+        {% if form_question_number_input %}
+            <li class="tabs-title"><a href="#question_number_input" aria-selected="true">Input number</a></li>
+        {% endif %}
+
+
+        {% if form_question_text_area %}
+            <li class="tabs-title"><a href="#question_text_area" aria-selected="true">Text area</a></li>
+        {% endif %}
+
     </ul>
 
     <div class="tabs-content" data-tabs-content="example-tabs">
-        <div class="tabs-panel" id="panel1">
+
+
+        <div class="tabs-panel" id="question_text_input">
 
 
             {% for form_temp in form_question_text_input %}
@@ -61,11 +69,73 @@
                 <br>
             {% endfor %}
         </div>
-        <div class=" tabs-panel" id="panel2">
-            <p>Suspendisse dictum feugiat nisl ut dapibus. Vivamus hendrerit arcu sed erat molestie vehicula. Ut in
-                nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Sed auctor neque eu
-                tellus rhoncus ut eleifend nibh porttitor.</p>
+
+
+        <div class=" tabs-panel" id="question_number_input">
+
+            {% for form_temp in form_question_number_input %}
+                Следующий
+                {{ form_temp }}
+
+                <div class="row align-justify">
+                    <div class="column small-2">
+
+                        <form action="/assay/questions/delete_question_number_input" method="post">
+
+                            {% csrf_token %}
+
+
+                            <input type="hidden" name="question_number_input_id"
+                                   id="question_number_input_id" value="{{ form_temp.question_number_input_id.value }}">
+                            <input type="hidden" name="question_id"
+                                   id="question_id" value="{{ question_id }}">
+                            <input class="label alert" type="submit" value="Delete number input">
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <hr>
+                <br>
+            {% endfor %}
+
+
         </div>
+
+        <div class=" tabs-panel" id="question_text_area">
+
+            {% for form_temp in form_question_text_area %}
+                Следующий
+                {{ form_temp }}
+
+                <div class="row align-justify">
+                    <div class="column small-2">
+
+                        <form action="/assay/questions/delete_question_text_area" method="post">
+
+                            {% csrf_token %}
+
+
+                            <input type="hidden" name="question_text_area_id"
+                                   id="question_text_area_id" value="{{ form_temp.question_text_area_id.value }}">
+                            <input type="hidden" name="question_id"
+                                   id="question_id" value="{{ question_id }}">
+                            <input class="label alert" type="submit" value="Delete text area">
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <hr>
+                <br>
+            {% endfor %}
+
+
+        </div>
+
+
     </div>
 
 
@@ -73,8 +143,10 @@
     <div class="expanded button-group">
         <a href="/assay/questions/{{ question_id }}/edit_question/add_question_text_input" class="button">Add
             Question_Text_Input</a>
-        <a class="button">Button</a>
-        <a class="button">Group</a>
+        <a href="/assay/questions/{{ question_id }}/edit_question/add_question_number_input" class="button">Add
+            Question_Number_Input</a>
+        <a href="/assay/questions/{{ question_id }}/edit_question/add_question_text_area" class="button">Add
+            Question_Text_Area</a>
     </div>
 
 {% endblock %}

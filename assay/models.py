@@ -5,18 +5,29 @@ from django.db import models
 
 
 # template classes
-# - обычный text_input
+# - обычный text_input +
+# - number input +
 # - text_area
 # - select_menus
 # - multiple select menus
 # - checkbox (множественный выбор)
 # - radio buttons
 #
+
+
+######################################################################### Managers
 class Question_Text_Input_Manager(models.Manager):
     def create_question_text_input(self, question_text_input_label, question_text_input_value):
         question_text_input = self.create(question_text_input_label=question_text_input_label,
                                           question_text_input_value=question_text_input_value)
         return question_text_input
+
+
+class Question_Number_Input_Manager(models.Manager):
+    def create_question_number_input(self, question_number_input_label, question_number_input_value):
+        question_number_input = self.create(question_number_input_label=question_number_input_label,
+                                            question_number_input_value=question_number_input_value)
+        return question_number_input
 
 
 class Assay_Manager(models.Manager):
@@ -33,6 +44,14 @@ class Question_Manager(models.Manager):
         question = self.create(question_description=question_description, question_text=question_text)
         return question
 
+class Question_Text_Area_Manager(models.Manager):
+    def create_text_area(self, question_text_area_label, question_text_area_value):
+        question_text_area = self.create(question_text_area_label=question_text_area_label, question_text_area_value=question_text_area_value)
+        return question_text_area
+
+
+
+######################################################################### Models
 
 class Question_Text_Input(models.Model):
     question_text_input_label = models.CharField('Описание Question_Text_Input', max_length=50)
@@ -44,14 +63,15 @@ class Question_Text_Input(models.Model):
         return ('%s' % self.question_text_input_label)
 
 
-class Question_Text_Area(models.Model):
-    question_text_area_label = models.CharField('Описание Question_Text_Area', max_length=50)
-    question_text_input_value = models.TextField('Значение Question_Text_Area')
-
-
 class Question_Number_Input(models.Model):
-    question_number_input_label = models.CharField('Описание Question_Text_Input', max_length=50)
+    question_number_input_label = models.CharField('Описание Question_Number_Input', max_length=50)
     question_number_input_value = models.IntegerField('Значение Question_Number_Input')
+    question_number_input_question = models.ForeignKey('Question', null=True)
+    objects = Question_Number_Input_Manager()
+
+    def __str__(self):
+        return ('%s' % self.question_number_input_label)
+
 
 class Question(models.Model):
     question_description = models.CharField('Описание вопроса', max_length=50)
@@ -73,3 +93,12 @@ class Assay(models.Model):
 
     def __str__(self):
         return ('%s' % self.assay_description)
+
+class Question_Text_Area(models.Model):
+    question_text_area_label = models.CharField('Описание Question_Text_Area', max_length=50)
+    question_text_area_value = models.TextField('Значение Question_Text_Area')
+    question_text_area_question = models.ForeignKey('Question', null=True)
+    objects = Question_Text_Area_Manager()
+
+    def __str__(self):
+        return ('%s' % self.question_text_area_label)

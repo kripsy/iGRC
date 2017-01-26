@@ -17,8 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
+    ######################################################################### authentication
     url(r'^auth/', include('loginapp.urls')),
+    ######################################################################### admin panel
     url(r'^admin/', admin.site.urls),
+    ######################################################################### assays
     url(r'^assay/', include('assay.urls')),
+    ######################################################################### other
     url(r'^', include('mainmenu.urls'))
 ]
